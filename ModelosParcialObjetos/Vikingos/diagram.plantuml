@@ -1,0 +1,101 @@
+@startuml
+
+class Expedicion {
+    objetivos 
+    cantVikingos
+
+    cantVikingos( )
+    expedicionQueValeLaPena( )
+    subirVikingo( )
+    realizarExpedicion( )
+    calcularBotinExpedicion( )
+    ganaciaPorVikingo( )
+    entregarGanaciaAlVikingo( )
+}
+
+abstract class Objetivo {
+    --
+    {abstract} valeLaPena(expedicion)
+    {abstract} calcularBotin( )
+    fueSaqueada( )
+}
+
+class Capital extends Objetivo {
+    factorRiqueza
+    cantDefensores
+
+    valeLaPena(expedicion)
+    calcularBotin()
+}
+
+class Aldea extends Objetivo {
+    cantCrucifijos
+
+    valeLaPena(expedicion)
+    calcularBotin()
+}
+
+class AldeaAmurallada extends Aldea {
+    cantMinimaDeVikingos
+
+    valeLaPena(expedicion)
+}
+
+abstract class Vikingo {
+    casta
+    oro
+
+    puedeSubirAExpedicion(expedicion)
+    {abstract} esProductivo( )
+    puedeAscenderDeCasta( )
+    {abstract} ascenderJar( )
+}
+
+class soldado extends Vikingo {
+    cantArmas
+    cantBajas
+
+    esProductivo()
+    tieneArmas()
+    ascenderJarl()
+}
+
+class Granjero extends Vikingo {
+    cantHijos
+    cantHectareas
+
+    esProductivo()
+    puedeAlimentarASusHijos()
+    ascenderJarl()
+}
+
+interface casta{
+    --
+    puedeIr()
+    ascenderDeCasta(vikingo)
+}
+
+object jarl {
+    --
+    puedeIr()
+    ascenderDeCasta(vikingo)
+}
+
+object castaMedia {
+    --
+    puedeIr()
+    ascenderDeCasta()
+}
+
+object nobles {
+    --
+    puedeIr()
+    ascenderDeCasta()
+}
+
+Vikingo -u-> casta
+jarl .r.|> casta
+castaMedia .r.|> casta
+nobles .r.|> casta
+Expedicion -> "*" Objetivo : "objetivos"
+Expedicion ..> Vikingo

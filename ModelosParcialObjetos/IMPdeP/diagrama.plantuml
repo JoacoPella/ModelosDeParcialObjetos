@@ -1,0 +1,92 @@
+@startuml
+
+abstract class Pelicula {
+    nombre
+    elenco
+
+    nombre( )
+    presupuesto( )
+    sumaDeLosSueldosDeElenco( )
+    ganacias( )
+    recaudacionBase( )
+    recaudacionTotal( )
+    {abstract} extraPorGenero( )
+    rodar( )
+    esConomica( )
+}
+
+class PeliculaDeDrama extends Pelicula {
+    --
+    extraPorGenero()
+}
+
+class PeliculaDeAccion extends Pelicula{
+    vidriosRotos
+
+    presupuesto()
+    extraPorGenero()
+}
+
+class PeliculaDeTerror extends Pelicula {
+    cantCuchillos
+
+    extraPorGenero()
+}
+
+class PeliculaDeComedia extends Pelicula {
+    --
+    extraPorGenero()
+}
+
+class Artista {
+    categoria
+    cantpeliculasRealizadas
+    ahorros
+
+    sueldo( )
+    nivelDeFama( )
+    actuar( )
+    recategorizarArtista( ) 
+}
+
+interface categoria {
+    --
+    sueldoSegunCategoria(unArtista)
+    recategorizar(unArtista)
+}
+
+object amateur {
+        --
+    sueldoSegunCategoria(unArtista)
+    recategorizar(unArtista)
+}
+
+object establecido {
+        --
+    sueldoSegunCategoria(unArtista)
+    recategorizar(unArtista)
+}
+
+object estrella {
+        --
+    sueldoSegunCategoria(unArtista)
+    recategorizar(unArtista)
+}
+
+class Impdp {
+    artistas
+    peliculas
+
+    artistaMejorPago( )
+    peliculasEconomicas( )
+    nombrePeliculasEconomicas( )
+    sumaGananciasDePeliculasEconomicas( )
+    recategorizarArtistas( )
+}
+
+Artista -l-> categoria
+amateur .u.|> categoria
+establecido .u.|> categoria
+estrella .u.|> categoria
+Impdp -d-> "*" Pelicula : pleiculas
+Impdp -d-> "*" Artista : artistas

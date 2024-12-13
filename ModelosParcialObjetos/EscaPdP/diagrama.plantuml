@@ -1,0 +1,85 @@
+@startuml
+
+class Grupo {
+    miembros
+
+    puedenEscapar(unaSala)
+    puedenPagarLaSala(unaSala)
+    pagarSala(unaSala)
+    precioPorMiembro(unaSala)
+    agregarSalaAlRegistro(unaSala)
+    escarpDe(unaSala)
+}
+
+interface maestria {
+    --
+    puedeEscaparDe(unaSala, unEscapista)
+    puedeSubirDeNivel()
+}
+
+class Escapista {
+    maestria
+    saldo
+    salasSuperadas
+
+    method puedeEscaparDe(unaSala)
+    escapoDeMuchasSalas ()
+    subirDeNivelDeMaestria ()
+    nombreDeSalasSuperadas ()
+    registrarSalaSuperada(unaSala)
+    pagarSala(unPrecio)
+    saldo ()
+}
+
+object amateur {
+    --
+    puedeEscaparDe(unaSala, unEscapista)
+    puedeSubirDeNivel()
+}
+
+object profesional {
+    --
+    puedeEscaparDe(unaSala, unEscapista)
+    puedeSubirDeNivel()
+}
+
+abstract class SalaDeEscape {
+    nombre
+    dificultad
+
+    nombre ()
+    precioBase ()
+    {abstract} precioExtraXGenero ()
+    precioTotal ()
+    esDificil ()
+    {abstract} condicionExtraXGenero ()
+    noEsDificil ()
+}
+
+class SalaDeEscapeAnime extends SalaDeEscape {
+    --
+    precioExtraXGenero()
+    condicionExtraXGenero()
+}
+
+class SalaDeEscapeHistoria extends SalaDeEscape {
+    basadaEnHistoriaReal
+
+    precioExtraXGenero()
+    condicionExtraXGenero()
+}
+
+class SalaDeEscapeTerror extends SalaDeEscape {
+    cantSustos
+
+    cantidadDeSustosMayorA(unaCant)
+    precioExtraXGenero()
+    condicionExtraXGenero()
+}
+
+amateur .u.|> maestria
+profesional .u.|> maestria
+Escapista -> maestria
+Grupo -> "*" Escapista : miembros
+Grupo ..> SalaDeEscape
+Escapista -> "*" SalaDeEscape : salasSuperadas

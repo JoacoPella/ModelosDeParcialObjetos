@@ -1,0 +1,71 @@
+@startuml
+
+class Empleado {
+    puesto
+    habilidades
+    salud
+
+    puedeUsar(habilidad)
+    recibirDanio(danio)
+    estaIncapacitado()
+    poseeHabilidad(habilidad)
+    finalizarMision(mision)
+    completarMision(mision)
+    aprenderHabilidad(habilidad)
+}
+
+class Jefe extends Empleado {
+    subordinados
+
+    poseeHabilidad(habilidad)
+    algunoDeSusSubordinadosLaUsa(habilidad)
+}
+
+interface Puesto {
+    completarMision(mision, empleado)
+}
+
+interface Asignado {
+    puedeUsar(habilidad)
+    recibirDanio(danio)
+    finalizarMision(mision)
+}
+
+object espia {
+    --
+    saludCritica()
+    completarMision(mision, empleado)
+}
+
+class Oficinista {
+    cantidadDeEstrellas
+
+    saludCritica()
+    completarMision(mision, empleado)
+}
+
+class Equipo {
+    empleados
+
+    puedeUsar(habilidad)
+    recibirDanio(danio)
+    finalizarMision(mision)
+}
+
+class Mision {
+    habilidadesRequeridas 
+    peligrosidad
+
+    serCumplida(asignado)
+    reuneHabilidadesRequeridas(asignado)
+    enseniarHabilidades(empleado)
+    habilidadesQueNoTiene(empleado)
+}
+
+espia .u.|> Puesto
+Oficinista .u.|> Puesto
+Empleado -> Puesto
+Mision ..> Asignado
+Equipo .u.|> Asignado
+Empleado .u.|> Asignado
+Equipo ->"*" Empleado
